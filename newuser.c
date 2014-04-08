@@ -28,6 +28,11 @@ int n = atoi(getenv("CONTENT_LENGTH"));
 //printf("%c",c);
         if (a < 200)
         {
+        	if (c==' ')
+        	{
+        		invalid=3;
+        		break;
+        	}
             if (c!='+' && c!='&')       //The ampersand is there for splitting string for sscanf
                 string[a]=c;
             else
@@ -38,38 +43,45 @@ a++;
 
     }
     string[a] = '\0';
+
 int b=0;
 int c=0;
 int x=0;
 int y=0;
 //This is why everybody fucking hates CGI with C, sscanf can't compile to CGI FFS.
-while (string[b]!='\0'){
-	if (string[b]=='='){
-		c++;
+if (invalid!=3){	
+	while (string[b]!='\0'){
+		if (string[b]=='='){
+			c++;
+		}
+		if (c==3){
+			if (string[b]!='='){
+			passwordInput[y]=string[b];
+			//printf("%c", string[b]);
+			y++;
+		}
+		}	
+		if (c==1){
+			if (string[b]!='='){
+			usernameInput[x]=string[b];
+			//printf("%c", string[b]);
+			x++;
+		}	
+		}
+
+
+
+		b++;
+
 	}
-	if (c==3){
-		if (string[b]!='='){
-		passwordInput[y]=string[b];
-		//printf("%c", string[b]);
-		y++;
-	}
-	}	
-	if (c==1){
-		if (string[b]!='='){
-		usernameInput[x]=string[b];
-		//printf("%c", string[b]);
-		x++;
-	}	
-	}
-
-
-
-	b++;
-
 }
 //printf("hash\n");
 usernameInput[x]='\0';
 passwordInput[y]='\0';
+if (sizeof(usernameInput)==0||sizeof(passwordInput==0))
+{
+	invalid=3;
+}
 //sscanf(hash,"%s", example);
 //printf("%s\n", string);
 //sscanf(string,"username=%s password=%s",usernameInput,passwordInput);
@@ -78,38 +90,39 @@ passwordInput[y]='\0';
 
 //usernameInput="newphew92";
 //passwordInput="hash";
+if (invalid!=3){
+	file=fopen("members.ssv", "r");
+	//printf("hash\n");
+	while (fgets(buffer, 100, file)!=NULL){
+	b=0;
+	c=0;
+	x=0;
+	y=0;
+	//This is why everybody fucking hates CGI with C, sscanf can't compile to CGI FFS.
+	while (buffer[b]!=' '){
+	  
+	if (buffer[b]!=' '){
+	username[x]=buffer[b];
+			//printf("%c", string[b]);
+		x++;
+		}	
 
-file=fopen("members.ssv", "r");
-//printf("hash\n");
-while (fgets(buffer, 100, file)!=NULL){
-b=0;
-c=0;
-x=0;
-y=0;
-//This is why everybody fucking hates CGI with C, sscanf can't compile to CGI FFS.
-while (buffer[b]!=' '){
-  
-if (buffer[b]!=' '){
-username[x]=buffer[b];
-		//printf("%c", string[b]);
-	x++;
-	}	
+		b++;
 
-	b++;
-
-}
-//printf("hash\n");
-username[x]='\0';
-password[y]='\0';	
-//printf("<p>user%s", username);
-//printf("|%s</p>", usernameInput);
-
-	if (strcmp(username, usernameInput)==0){
-		invalid=1;
-		break;
 	}
-}	
+	//printf("hash\n");
+	username[x]='\0';
+	password[y]='\0';	
+	//printf("<p>user%s", username);
+	//printf("|%s</p>", usernameInput);
+
+		if (strcmp(username, usernameInput)==0){
+			invalid=1;
+			break;
+		}
+	}	
 fclose (file);
+}
 if (invalid==1){
 printf("<link rel=\"stylesheet\" href=\"../surveyStyle.css\">\n");
 printf("<head>\n");
@@ -123,7 +136,7 @@ printf("The username has been already taken, please use another\n");
 printf("</p>\n");
 printf("<div id=\"menu\">\n");
 printf("<ul>\n");
-printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/ass4/login.html\">Click here to login</a></li>\n");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/login.html\">Click here to login</a></li>\n");
 printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/ass4/welcome.html\">Click here to return home</a></li>\n");
 printf("</div>\n");
 printf("</BODY\n");
@@ -145,10 +158,29 @@ printf("The username and password have been accepted");
 printf("</p>");
 printf("<div id=\"menu\">");
 printf("<ul>");
-printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/ass4/login.html\">Click here to login</a></li>");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/login.html\">Click here to login</a></li>");
 printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/ass4/welcome.html\">Click here to return homet</a></li>");
 printf("</div>");
 printf("</BODY");
 }
+else if (invalid==3){
+printf("<link rel=\"stylesheet\" href=\"../surveyStyle.css\">\n");
+printf("<head>\n");
+printf("<link rel=\"shortcut icon\" href=\"http://i68.photobucket.com/albums/i7/newphew92/bagel_zps29e40f4c.jpg\">\n");
+printf("<h1>NO BLANK SPACES PLEASE\n");
+printf("</h1>\n");
+printf("</head>\n");
+printf("<BODY>\n");
+printf("<p>\n");
+printf("NO BLANK SPACES PLEASE\n");
+printf("</p>\n");
+printf("<div id=\"menu\">\n");
+printf("<ul>\n");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/login.html\">Click here to login</a></li>\n");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/ass4/welcome.html\">Click here to return home</a></li>\n");
+printf("</div>\n");
+printf("</BODY\n");
+}
+
 	return 0;
 }

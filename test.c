@@ -8,7 +8,9 @@ char buffer[100];
 char c;
 int a=0;
 char string[200];
-
+char* hash="hashmash";
+//printf("%d\n",(int)sizeof(hash) );
+/*
 printf("%s%c%c\n", "Content-Type:text/html;charset=iso-8859-1", 13, 10);
 
 int n = atoi(getenv("CONTENT_LENGTH"));
@@ -27,7 +29,7 @@ int n = atoi(getenv("CONTENT_LENGTH"));
         printf("%c",a );
     }
     string[a] = '\0';
-
+*/
 
 	return 0;
 }
