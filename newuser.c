@@ -28,13 +28,11 @@ int n = atoi(getenv("CONTENT_LENGTH"));
 //printf("%c",c);
         if (a < 200)
         {
-        	if (c==' ')
-        	{
-        		invalid=3;
-        		break;
-        	}
+
             if (c!='+' && c!='&')       //The ampersand is there for splitting string for sscanf
                 string[a]=c;
+          	
+            }
             else
                 string[a]='=';
             //printf("%c", string[a]);
@@ -49,7 +47,7 @@ int c=0;
 int x=0;
 int y=0;
 //This is why everybody fucking hates CGI with C, sscanf can't compile to CGI FFS.
-if (invalid!=3){	
+
 	while (string[b]!='\0'){
 		if (string[b]=='='){
 			c++;
@@ -68,13 +66,10 @@ if (invalid!=3){
 			x++;
 		}	
 		}
-
-
-
 		b++;
 
 	}
-}
+
 //printf("hash\n");
 usernameInput[x]='\0';
 passwordInput[y]='\0';
@@ -90,7 +85,6 @@ if (sizeof(usernameInput)==0||sizeof(passwordInput==0))
 
 //usernameInput="newphew92";
 //passwordInput="hash";
-if (invalid!=3){
 	file=fopen("members.ssv", "r");
 	//printf("hash\n");
 	while (fgets(buffer, 100, file)!=NULL){
@@ -122,22 +116,22 @@ if (invalid!=3){
 		}
 	}	
 fclose (file);
-}
+
 if (invalid==1){
 printf("<link rel=\"stylesheet\" href=\"../surveyStyle.css\">\n");
 printf("<head>\n");
 printf("<link rel=\"shortcut icon\" href=\"http://i68.photobucket.com/albums/i7/newphew92/bagel_zps29e40f4c.jpg\">\n");
-printf("<h1>Username already taken!\n");
+printf("<h1>Account Creation Failed!\n");
 printf("</h1>\n");
 printf("</head>\n");
 printf("<BODY>\n");
 printf("<p>\n");
-printf("The username has been already taken, please use another\n");
+printf("Please verify that the fields are not blank. If this is not the case, the username may have been taken already.\n");
 printf("</p>\n");
 printf("<div id=\"menu\">\n");
 printf("<ul>\n");
 printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/login.html\">Click here to login</a></li>\n");
-printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/ass4/welcome.html\">Click here to return home</a></li>\n");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/welcome.html\">Click here to return home</a></li>\n");
 printf("</div>\n");
 printf("</BODY\n");
 }
@@ -159,10 +153,11 @@ printf("</p>");
 printf("<div id=\"menu\">");
 printf("<ul>");
 printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/login.html\">Click here to login</a></li>");
-printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/ass4/welcome.html\">Click here to return homet</a></li>");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/welcome.html\">Click here to return homet</a></li>");
 printf("</div>");
 printf("</BODY");
 }
+/*
 else if (invalid==3){
 printf("<link rel=\"stylesheet\" href=\"../surveyStyle.css\">\n");
 printf("<head>\n");
@@ -177,10 +172,10 @@ printf("</p>\n");
 printf("<div id=\"menu\">\n");
 printf("<ul>\n");
 printf("<li><a href=\"http://www.cs.mcgill.ca/~vwen/login.html\">Click here to login</a></li>\n");
-printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/ass4/welcome.html\">Click here to return home</a></li>\n");
+printf("<li><a href=\"http://www.cs.mcgill.ca/~ctrinh2/welcome.html\">Click here to return home</a></li>\n");
 printf("</div>\n");
 printf("</BODY\n");
 }
-
+*/
 	return 0;
 }
